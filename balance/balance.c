@@ -35,10 +35,13 @@ m_input_mode_t;
 // global variables
 static int tipover_flag = 1;
 static int tip_count = 0;
-static float press = 0.002;  // [s]
 static int freq = 200;  // [Hz]
-static float ts = 1/freq;   // [s]
-#define sec2usec 1E6
+
+static int us20khz = 50;    // [us]
+static int us2khz = 500;    // [us]
+static int us200hz = 5000;  // [us]
+static int us20hz = 50000;  // [us]
+static int us2hz = 500000;  // [us]
 
 static rc_mpu_data_t mpu_data;
 #define GPIO_INT_PIN_CHIP 3
@@ -47,43 +50,44 @@ static rc_mpu_data_t mpu_data;
 #define RAD_TO_DEG 57.295779513
 #define DEG_TO_RAD 0.0174532925199
 #define pi 3.14159265359
-// static float theta_a;
-// static float ay;
-// static float az;
-// static float gx;
+
+// static double theta_a;
+// static double ay;
+// static double az;
+// static double gx;
 // static int j = 0;
-// static float theta_g;
-// static float theta_g1;
-// static float theta_g0;
-// static float wc = 10;
-// static float a1;
-// static float a2;
-// static float low;
-// static float low_1;
-// static float low0;
-// static float high;
-// static float high_1;
-// static float high0;
+// static double theta_g;
+// static double theta_g1;
+// static double theta_g0;
+// static double wc = 10;
+// static double a1;
+// static double a2;
+// static double low;
+// static double low_1;
+// static double low0;
+// static double high;
+// static double high_1;
+// static double high0;
 
-static float theta_f;
-static float phi_ref = 0;
-static float theta_ref = -0.48;    // [rad]
-float phi_m1;
-float phi_m2;
+static double theta_f;
+static double phi_ref = 0;
+static double theta_ref = -0.48;    // [rad]
+double phi_m1;
+double phi_m2;
 
-float u_k = 0;
-float u_k1 = 0;
-float u_k2 = 0;
-float theta1_k = 0;
-float theta1_k1 = 0;
-float theta1_k2 = 0;
+double u_k = 0;
+double u_k1 = 0;
+double u_k2 = 0;
+double theta1_k = 0;
+double theta1_k1 = 0;
+double theta1_k2 = 0;
 
-float theta2_k = 0;
-float theta2_k1 = 0;
-float theta2_k2 = 0;
-float phi_k = 0;
-float phi_k1 = 0;
-float phi_k2 = 0;
+double theta2_k = 0;
+double theta2_k1 = 0;
+double theta2_k2 = 0;
+double phi_k = 0;
+double phi_k1 = 0;
+double phi_k2 = 0;
 
 // inner loop
 #define K1 0.25
@@ -179,11 +183,11 @@ int main()
     printf("Hold pause button down for 2 seconds to exit\n");
 
     // start balance stack to control set points
-    if(rc_pthread_create(&thread1,my_thread_1, (void*) NULL, SCHED_OTHER, 0))
-    {
-        fprintf(stderr, "ERROR: Failed to start thread 1\n");
-        return -1;
-    }
+    // if(rc_pthread_create(&thread1,my_thread_1, (void*) NULL, SCHED_OTHER, 0))
+    // {
+    //     fprintf(stderr, "ERROR: Failed to start thread 1\n");
+    //     return -1;
+    // }
 
     // initialize & start MPU
     rc_mpu_config_t mpu_conf = rc_mpu_default_config();
@@ -218,7 +222,7 @@ int main()
             rc_led_set(RC_LED_RED, 1);
         }
         // always sleep at some point
-        rc_usleep(sec2usec/2);  // 2Hz / 500ms / 500000us / .5s
+        rc_usleep(us2hz);  // 2Hz / 500000us
     }
 
     // turn off LEDs and close file descriptors
@@ -369,7 +373,7 @@ void imu_interrupt_loop()
         u_k1 = u_k;
         theta1_k2 = theta1_k1;
         theta1_k1 = theta1_k;
-        rc_usleep(ts*sec2usec);    // 200Hz / 5000us / 5ms
+        rc_usleep(us200hz);    // 200Hz / 5000us
         return;
     }
 }
@@ -391,13 +395,13 @@ void on_pause_release()
 }
 
 /*
- * If the user holds the pause button for .2 seconds, set state to EXITING which
+ * If the user holds the pause button for 100us, set state to EXITING which
  * triggers the rest of the program to exit cleanly.
  */
 void on_pause_press() {
     int i;
     const int samples = 10;    // check for release 10 times in this period
-    const int us_wait = press * sec2usec;
+    const int us_wait = 100;    // 100us
 
     // now keep checking to see if the button is still held down
     for(i = 0; i < samples; i++)
