@@ -284,7 +284,7 @@ void imu_interrupt_loop()
         // }
         // j++;
 
-        theta_f = -mpu_data.dmp_TaitBryan[TB_PITCH_X];
+        theta_f = mpu_data.dmp_TaitBryan[TB_PITCH_X];
 
         if ((theta_f + theta_ref <= -1*pi/4) || (theta_f+ theta_ref >= pi/4))
         {
