@@ -72,20 +72,20 @@ double phi_k2 = 0;
 
 // inner loop
 #define K1 0.25
-#define cu_k1 -1.7408   //-1.5769
-#define cu_k2 0.7408    //0.5769
-#define ctheta1_k -20   //-46.8
-#define ctheta1_k1 36.287   //85.8607
-#define ctheta1_k2 -16.3736 //-39.2413
-#define P1 1.0/1.4572   //0.7519
+#define cu_k1 -1.7408
+#define cu_k2 0.7408
+#define ctheta1_k -20
+#define ctheta1_k1 36.287
+#define ctheta1_k2 -16.3736
+#define P1 1.0/1.4572
 
 // outer loop
 #define K2 0
-#define ctheta2_k1 -0.9704  //-1.9056
-#define ctheta2_k2 0    //0.9078
+#define ctheta2_k1 -0.9704
+#define ctheta2_k2 0
 #define cphi_k  0.085
-#define cphi_k1 -0.085  //0.0071
-#define cphi_k2 0   //-0.0071
+#define cphi_k1 -0.085
+#define cphi_k2 0
 
 #define g1 2135
 #define g2 2135
@@ -266,8 +266,6 @@ void imu_interrupt_loop()
 
         if (tipover_flag)
         {
-            // phi_m1 = 0;
-            // phi_m2 = 0;
             rc_encoder_eqep_write(1,0);
             rc_encoder_eqep_write(2,0);
 
