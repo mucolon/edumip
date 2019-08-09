@@ -32,7 +32,7 @@ typedef enum m_input_mode_t
 m_input_mode_t;
 
 // global variables
-static int tipover_flag = 1;
+static int tipover_flag = 0;
 static int tip_count = 0;
 static int freq = 200;  // [Hz]
 
@@ -52,7 +52,7 @@ static rc_mpu_data_t mpu_data;
 
 double theta_f;
 static double phi_ref = 0;
-static double theta_ref = -0.49;    // [rad]
+static double theta_ref = -0.485;    // [rad]
 double phi_m1;
 double phi_m2;
 
@@ -103,10 +103,13 @@ int main()
     // higher privileges and we couldn't kill it, in which case we should
     // not continue or there may be hardware conflicts. If it returned -4
     // then there was an invalid argument that needs to be fixed.
-    if(rc_kill_existing_process(2.0)<-2) return -1;
+    if (rc_kill_existing_process(2.0) < -2)
+    {
+        return -1;
+    }
 
     // start signal handler so we can exit cleanly
-    if(rc_enable_signal_handler()==-1)
+    if(rc_enable_signal_handler() == -1)
     {
         fprintf(stderr,"ERROR: failed to start signal handler\n");
         return -1;
@@ -216,27 +219,22 @@ void imu_interrupt_loop()
 {
     while(rc_get_state()!=EXITING)
     {
+        int i = 0;
 
         theta_f = -mpu_data.dmp_TaitBryan[TB_PITCH_X];
 
-        if ((theta_f + theta_ref <= -1*pi/4) || (theta_f+ theta_ref >= pi/4))
+        if ((theta_f <= -1*pi/4) || (theta_f >= 11*pi/25))
         {
             tipover_flag = 1;
+            tip_count ++;
         }
-
-        else if ((theta_f + theta_ref >= -1*pi/3) && (theta_f + theta_ref <= pi/3) && (tipover_flag))
-        {
-            tip_count++;
-        }
-
-        else
-        {
-            tip_count = 0;
-        }
-
-        if (tip_count > 400 && tipover_flag)
+        else if ((tip_count > 400) && tipover_flag)
         {
             tipover_flag = 0;
+            tip_count = 0;
+        }
+        else
+        {
             tip_count = 0;
         }
 
@@ -268,8 +266,11 @@ void imu_interrupt_loop()
 
         if (tipover_flag)
         {
+            phi_m1 = 0;
+            phi_m2 = 0;
             rc_encoder_eqep_write(1,0);
             rc_encoder_eqep_write(2,0);
+
             theta2_k2 = 0;
             theta2_k1 = 0;
             theta2_k = 0;
@@ -294,8 +295,11 @@ void imu_interrupt_loop()
             rc_motor_set(m2,-1*u_k);
         }
 
-        printf("\ntheta2_k: %6.3f | phi_k = %6.3f\n", theta2_k, phi_k);
-        printf("u_k: %6.3f | theta_k: %6.3f\n", u_k, theta1_k);
+        if (i % freq == 0)
+        {
+            printf("\ntheta2_k: %6.3f | phi_k = %6.3f\n", theta2_k, phi_k);
+            printf("u_k: %6.3f | theta_k: %6.3f\n", u_k, theta1_k);
+        }
 
         theta2_k2 = theta2_k1;
         theta2_k1 = theta2_k;
@@ -306,6 +310,8 @@ void imu_interrupt_loop()
         u_k1 = u_k;
         theta1_k2 = theta1_k1;
         theta1_k1 = theta1_k;
+
+        i ++;
         return;
     }
 }
@@ -343,7 +349,7 @@ void on_pause_press() {
             return;
     }
 
-    printf("long press detected, shutting down\n");
+    printf("\nPress detected, shutting down\n");
     rc_set_state(EXITING);
     return;
 }
