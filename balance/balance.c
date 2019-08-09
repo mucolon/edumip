@@ -39,7 +39,7 @@ static int freq = 200;  // [Hz]
 
 // static int us20khz = 50;    // [us]
 // static int us2khz = 500;    // [us]
-static int us200hz = 5000;  // [us]
+// static int us200hz = 5000;  // [us]
 // static int us20hz = 50000;  // [us]
 static int us2hz = 500000;  // [us]
 
