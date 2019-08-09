@@ -37,10 +37,10 @@ static int tipover_flag = 1;
 static int tip_count = 0;
 static int freq = 200;  // [Hz]
 
-static int us20khz = 50;    // [us]
-static int us2khz = 500;    // [us]
+// static int us20khz = 50;    // [us]
+// static int us2khz = 500;    // [us]
 static int us200hz = 5000;  // [us]
-static int us20hz = 50000;  // [us]
+// static int us20hz = 50000;  // [us]
 static int us2hz = 500000;  // [us]
 
 static rc_mpu_data_t mpu_data;
