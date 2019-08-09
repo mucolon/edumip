@@ -8,6 +8,7 @@
  *             will be saved which is loaded automatically the next time the MPU
  *             is used.
  *
+ * @complie	   sudo gcc rc_calibrate_gyro.c -o rc_calibrate_gyro -l:librobotcontrol.so.1
  *
  * @author     James Strawson
  * @date       1/29/2018

@@ -7,6 +7,8 @@
  *             This does not use the DMP, for a demonstration of DMP
  *             functionality see rc_test_dmp.
  *
+ * @compile    sudo gcc rc_test_mpu.c -o rc_test_mpu -l:librobotcontrol.so.1
+ *
  * @author     James Strawson
  * @date       1/29/2018
  */

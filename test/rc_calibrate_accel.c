@@ -8,6 +8,7 @@
  *             file will be saved which is loaded automatically the next time
  *             the MPU is used.
  *
+ * @compile    sudo gcc rc_calibrate_accel.c -o rc_calibrate_accel -l:librobotcontrol.so.1
  *
  * @author     James Strawson
  * @date       1/29/2018
