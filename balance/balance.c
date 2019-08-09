@@ -23,7 +23,6 @@
 void imu_interrupt_loop();
 void on_pause_press();
 void on_pause_release();
-// static void* my_thread_1(void* ptr);   //< background thread @ 200Hz / 5ms / 5000us / .005s
 typedef enum m_input_mode_t
 {
     NONE,
@@ -50,24 +49,6 @@ static rc_mpu_data_t mpu_data;
 #define RAD_TO_DEG 57.295779513
 #define DEG_TO_RAD 0.0174532925199
 #define pi 3.14159265359
-
-// static double theta_a;
-// static double ay;
-// static double az;
-// static double gx;
-// static int j = 0;
-// static double theta_g;
-// static double theta_g1;
-// static double theta_g0;
-// static double wc = 10;
-// static double a1;
-// static double a2;
-// static double low;
-// static double low_1;
-// static double low0;
-// static double high;
-// static double high_1;
-// static double high0;
 
 double theta_f;
 static double phi_ref = 0;
@@ -116,7 +97,6 @@ m_input_mode_t m_input_mode=DSM;
 
 int main()
 {
-    // pthread_t thread1 = 0;
 
     // make sure another instance isn't running
     // if return value is -3 then a background process is running with
@@ -183,12 +163,6 @@ int main()
     printf("Hold pause button down for 2 seconds to exit\n");
 
     // start balance stack to control set points
-    // if(rc_pthread_create(&thread1,my_thread_1, (void*) NULL, SCHED_OTHER, 0))
-    // {
-    //     fprintf(stderr, "ERROR: Failed to start thread 1\n");
-    //     return -1;
-    // }
-
     // initialize & start MPU
     rc_mpu_config_t mpu_conf = rc_mpu_default_config();
     mpu_conf.dmp_sample_rate = freq; // 200 [Hz] to execute IMU interrupt
@@ -237,52 +211,11 @@ int main()
     return 0;
 }
 
-// static void* my_thread_1(__attribute__ ((unused)) void* ptr)
-// {
-//     usleep(1000000);
-//     return NULL;
-// }
-
 // inner loop MIP angle tracking
 void imu_interrupt_loop()
 {
     while(rc_get_state()!=EXITING)
     {
-        // ay = mpu_data.accel[1];
-        // az = mpu_data.accel[2];
-        // theta_a = atan2(az, ay);             // rad
-        // gx = mpu_data.gyro[0]*-1*DEG_TO_RAD;     // rad
-        // a1 = (h*wc)/(h*wc+1);
-        // a2 = 1/(h*wc+1);
-        // if(j==0)
-        // {                      // rad
-        //     theta_g0 = theta_a;
-        //     theta_g = theta_g0;
-        //     low0 = a1*theta_a;
-        //     high0 = a2*theta_g;
-        //     theta_f = low0 + high0;
-        // }
-        // else if(j==1)
-        // {                 // rad
-        //     theta_g = theta_g0 + h*gx;
-        //     theta_g1 = theta_g;
-        //     low = a1*theta_a + (1-a1)*low0;
-        //     low_1 = low;
-        //     high = a2*high0 + a2*(theta_g - theta_g0);
-        //     high_1 = high;
-        //     theta_f = low + high;
-        // }
-        // else if(j>1)
-        // {                  // rad
-        //     theta_g = theta_g1 + h*gx;
-        //     theta_g1 = theta_g;
-        //     low = a1*theta_a + (1-a1)*low_1;
-        //     low_1 = low;
-        //     high = a2*high_1 + a2*(theta_g - theta_g1);
-        //     high_1 = high;
-        //     theta_f = low + high;
-        // }
-        // j++;
 
         theta_f = -mpu_data.dmp_TaitBryan[TB_PITCH_X];
 
@@ -373,7 +306,6 @@ void imu_interrupt_loop()
         u_k1 = u_k;
         theta1_k2 = theta1_k1;
         theta1_k1 = theta1_k;
-        // rc_usleep(us200hz);    // 200Hz / 5000us
         return;
     }
 }
