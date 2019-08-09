@@ -52,7 +52,7 @@ static rc_mpu_data_t mpu_data;
 
 double theta_f;
 static double phi_ref = 0;
-static double theta_ref = -0.485;    // [rad]
+static double theta_ref = -0.485;	// [rad]
 double phi_m1;
 double phi_m2;
 
