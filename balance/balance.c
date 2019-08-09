@@ -69,9 +69,9 @@ static rc_mpu_data_t mpu_data;
 // static double high_1;
 // static double high0;
 
-static double theta_f;
+double theta_f;
 static double phi_ref = 0;
-static double theta_ref = -0.48;    // [rad]
+static double theta_ref = -0.49;    // [rad]
 double phi_m1;
 double phi_m2;
 
@@ -284,7 +284,7 @@ void imu_interrupt_loop()
         // }
         // j++;
 
-        theta_f = mpu_data.dmp_TaitBryan[TB_PITCH_X];
+        theta_f = -mpu_data.dmp_TaitBryan[TB_PITCH_X];
 
         if ((theta_f + theta_ref <= -1*pi/4) || (theta_f+ theta_ref >= pi/4))
         {
@@ -373,7 +373,7 @@ void imu_interrupt_loop()
         u_k1 = u_k;
         theta1_k2 = theta1_k1;
         theta1_k1 = theta1_k;
-        rc_usleep(us200hz);    // 200Hz / 5000us
+        // rc_usleep(us200hz);    // 200Hz / 5000us
         return;
     }
 }
