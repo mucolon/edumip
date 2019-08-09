@@ -295,7 +295,7 @@ void imu_interrupt_loop()
             rc_motor_set(m2,-1*u_k);
         }
 
-        if (i % (2*freq) == 0)
+        if ((i % (2*freq)) == 0)
         {
             printf("\ntheta2_k: %6.3f | phi_k = %6.3f\n", theta2_k, phi_k);
             printf("u_k: %6.3f | theta_k: %6.3f\n", u_k, theta1_k);
