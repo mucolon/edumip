@@ -1,3 +1,3 @@
 # edumip
 
-![](https://media.giphy.com/media/hSX5dZy4HYbc94948F/giphy.gif)
+![](https://media.giphy.com/media/UQOlCjghA10eAPgqOg/giphy.gif)
