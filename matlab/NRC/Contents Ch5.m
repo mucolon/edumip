@@ -1,0 +1,34 @@
+% ------------------------------ CHAPTER 5: SPECTRAL METHODS ------------------------------
+% Attendant to the text <a href="matlab:web('http://numerical-renaissance.com/')">Numerical Renaissance: simulation, optimization, & control</a>
+% Files in Chapter 5 of <a href="matlab:help NRC">Numerical Renaissance Codebase 1.0</a>:
+%   FFTrecursive         - function [x] = FFTrecursive(x,N,g)
+%   FFTrecursiveTest     - script <a href="matlab:FFTrecursiveTest">FFTrecursiveTest</a> 
+%   FFTdirect            - function x=FFTdirect(x,N,g)
+%   FFTdirectTest        - script <a href="matlab:FFTdirectTest">FFTdirectTest</a>
+%   FFTnonreordered      - function x=FFTnonreordered(x,N,g)
+%   FFTnonreorderedTest  - script <a href="matlab:FFTnonreorderedTest">FFTnonreorderedTest</a>
+%   RFFT2                - function [uhat,vhat]=RFFT2(u,v,N)
+%   RFFT2inv             - function [u,v]=RFFT2inv(uhat,vhat,N)
+%   RFFT2Test            - script <a href="matlab:RFFT2Test">RFFT2Test</a>
+%   RFFT1                - function [uhat]=RFFT1(u,N)
+%   RFFT1inv             - function [u]=RFFT1inv(uhat,N)
+%   RFFT1Test            - script <a href="matlab:RFFT1Test">RFFT1Test</a>
+%   RFFT                 - function [uh]=RFFT(u,N)
+%   RFFTinv              - function [u]=RFFTinv(uh,N)
+%   RFFTtest             - script <a href="matlab:RFFTtest">RFFTtest</a>
+%   RFST                 - function [uhatS]=RFST(u,N)
+%   RFSTinv              - function [u]=RFSTinv(uhatS,N)
+%   RFSTtest             - script <a href="matlab:RFSTtest">RFSTtest</a>
+%   RFCT                 - function [uhatC]=RFCT(u,N)
+%   RFCTinv              - function [u]=RFCTinv(uhatC,N)
+%   RFCTtest             - script <a href="matlab:RFCTtest">RFCTtest</a>
+%   RFFT3D               - function [uhat]=RFFT3D(u,NX,NY,NZ)
+%   RFFT3Dinv            - function [u]=RFFT3Dinv(uhat,NX,NY,NZ)
+%   RFFT3DTest           - script <a href="matlab:RFFT3DTest">RFFT3DTest</a>
+%   RemoveDivergence     - function [v1hat,v2hat,v3hat]=RemoveDivergence(v1hat,v2hat,v3hat,NX,NY,NZ,KX,KY,KZ)
+%   ComputeDivergence    - function [div]=ComputeDivergence(u1hat,u2hat,u3hat,NX,NY,NZ,KX,KY,KZ)
+%   RemoveDivergenceTest - script <a href="matlab:RemoveDivergenceTest">RemoveDivergenceTest</a>
+%   StretchedFourierTest - script <a href="matlab:StretchedFourierTest">StretchedFourierTest</a>
+%   Chebyshev            - function [x]=Chebyshev(n,x,derivative,kind)
+%   ChebyshevTest        - script <a href="matlab:ChebyshevTest">ChebyshevTest</a>
+% <a href="matlab:help NRchap04"><-previous</a> ---------- please read the <a href="matlab:help NRcopyleft">copyleft</a>, and please <a href="matlab:help NRsupport">support</a> us! ----------- <a href="matlab:help NRchap06">next-></a>
