@@ -1,4 +1,4 @@
-# eduMip Projects
+# edumip: A complete repository for my eduMiP projects
 
 ## Self-Balancing eduMip
 
